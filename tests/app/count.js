@@ -1,11 +1,15 @@
 /*jshint expr:true */
 /*globals describe:true, it:true, expect:true, beforeEach:true, console:true */
-if (typeof define !== 'function') { var define = require('amdefine')(module); }
-if (typeof expect !== 'function') { var expect = require('expect.js'); }
+if (typeof define !== 'function') {
+  var define = require('amdefine')(module);
+}
+if (typeof expect !== 'function') {
+  var expect = require('expect.js');
+}
 
 define([
   'app/count'
-], function(answers) {
+], function (answers) {
   /**
    * This test describes a function, count, that takes two arguments: a starting number,
    * and an ending number. The function should console.log each number from the start
@@ -23,7 +27,6 @@ define([
       }
 
       console.log = function (val) {
-        console.info(val)
         nums.push(val);
       };
     });
