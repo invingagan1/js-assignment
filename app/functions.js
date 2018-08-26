@@ -63,9 +63,23 @@ define(function () {
     },
 
     curryIt: function (fn) {
-      return function () {
+      var args = [];
 
-      };
+      function curry(fn, index, args) {
+        return function (x) {
+          args.push(x);
+          if (index === args.length) {
+            return fn(...args);
+          }
+          return curry(fn, index + 1, args);
+        };
+      }
+
+      if (arguments.length === 1) {
+        return fn;
+      } else {
+        return curry(fn, 1, args);
+      }
     }
   };
 });
