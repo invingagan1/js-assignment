@@ -58,8 +58,7 @@ define(function () {
         }
       }
       return function () {
-        var concatArgs = argsArr.concat(arguments);
-        return fn.apply(null, concatArgs);
+        return fn.call(this, ...argsArr, ...arguments);
       };
     },
 
