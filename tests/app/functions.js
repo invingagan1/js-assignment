@@ -1,52 +1,58 @@
 /*jshint expr:true */
 /*globals describe:true, it:true, expect:true, beforeEach:true */
-if (typeof define !== 'function') { var define = require('amdefine')(module); }
-if (typeof expect !== 'function') { var expect = require('expect.js'); }
+if (typeof define !== 'function') {
+  var define = require('amdefine')(module);
+}
+if (typeof expect !== 'function') {
+  var expect = require('expect.js');
+}
 
 define([
   'underscore',
   'app/functions'
-], function(_, answers) {
+], function (_, answers) {
 
-  describe('functions', function() {
+  describe('functions', function () {
     var sayItCalled = false;
-    var sayIt = function(greeting, name, punctuation) {
-          sayItCalled = true;
-          return greeting + ', ' + name + (punctuation || '!');
-        };
+    var sayIt = function (greeting, name, punctuation) {
+      sayItCalled = true;
+      return greeting + ', ' + name + (punctuation || '!');
+    };
 
     beforeEach(function () {
       sayItCalled = false;
     });
 
-    it('you should be able to use an array as arguments when calling a function', function() {
-      var result = answers.argsAsArray(sayIt, [ 'Hello', 'Ellie', '!' ]);
+    it('you should be able to use an array as arguments when calling a function', function () {
+      var result = answers.argsAsArray(sayIt, ['Hello', 'Ellie', '!']);
       expect(result).to.eql('Hello, Ellie!');
       expect(sayItCalled).to.be.ok;
     });
 
-    it('you should be able to change the context in which a function is called', function() {
-      var speak = function() {
-            return sayIt(this.greeting, this.name, '!!!');
-          },
-          obj = {
-            greeting : 'Hello',
-            name : 'Rebecca'
-          };
+    it('you should be able to change the context in which a function is called', function () {
+      var speak = function () {
+          return sayIt(this.greeting, this.name, '!!!');
+        },
+        obj = {
+          greeting: 'Hello',
+          name: 'Rebecca'
+        };
 
       var result = answers.speak(speak, obj);
       expect(result).to.eql('Hello, Rebecca!!!');
       expect(sayItCalled).to.be.ok;
     });
 
-    it('you should be able to return a function from a function', function() {
+    it('you should be able to return a function from a function', function () {
       expect(answers.functionFunction('Hello')('world')).to.eql('Hello, world');
       expect(answers.functionFunction('Hai')('can i haz funxtion?')).to.eql('Hai, can i haz funxtion?');
     });
 
     it('you should be able to use closures', function () {
-      var arr = [ Math.random(), Math.random(), Math.random(), Math.random() ];
-      var square = function (x) { return x * x; };
+      var arr = [Math.random(), Math.random(), Math.random(), Math.random()];
+      var square = function (x) {
+        return x * x;
+      };
 
       var funcs = answers.makeClosures(arr, square);
       expect(funcs).to.have.length(arr.length);
@@ -56,7 +62,7 @@ define([
       }
     });
 
-    it('you should be able to create a "partial" function', function() {
+    it('you should be able to create a "partial" function', function () {
       var partial = answers.partial(sayIt, 'Hello', 'Ellie');
       expect(partial('!!!')).to.eql('Hello, Ellie!!!');
       expect(sayItCalled).to.be.ok;
@@ -64,9 +70,9 @@ define([
 
     it('you should be able to use arguments', function () {
       var a = Math.random(),
-          b = Math.random(),
-          c = Math.random(),
-          d = Math.random();
+        b = Math.random(),
+        c = Math.random(),
+        d = Math.random();
 
       expect(answers.useArguments(a)).to.eql(a);
       expect(answers.useArguments(a, b)).to.eql(a + b);
@@ -76,7 +82,9 @@ define([
 
     it('you should be able to apply functions with arbitrary numbers of arguments', function () {
       (function () {
-        var a = Math.random(), b = Math.random(), c = Math.random();
+        var a = Math.random(),
+          b = Math.random(),
+          c = Math.random();
 
         var wasITake2ArgumentsCalled = false;
         var iTake2Arguments = function (firstArgument, secondArgument) {
@@ -108,10 +116,14 @@ define([
 
     it('you should be able to create a "partial" function for variable number of applied arguments', function () {
       var partialMe = function (x, y, z) {
+        console.info(x, y, z);
         return x / y * z;
       };
 
-      var a = Math.random(), b = Math.random(), c = Math.random();
+      var a = Math.random(),
+        b = Math.random(),
+        c = Math.random();
+
       expect(answers.partialUsingArguments(partialMe)(a, b, c)).to.eql(partialMe(a, b, c));
       expect(answers.partialUsingArguments(partialMe, a)(b, c)).to.eql(partialMe(a, b, c));
       expect(answers.partialUsingArguments(partialMe, a, b)(c)).to.eql(partialMe(a, b, c));
@@ -123,7 +135,10 @@ define([
         return x / y * z;
       };
 
-      var a = Math.random(), b = Math.random(), c = Math.random(), result;
+      var a = Math.random(),
+        b = Math.random(),
+        c = Math.random(),
+        result;
 
       result = answers.curryIt(curryMe);
       expect(typeof result).to.eql('function');
