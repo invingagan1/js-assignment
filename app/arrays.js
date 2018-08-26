@@ -5,7 +5,6 @@ if (typeof define !== 'function') {
 define(function () {
   return {
     indexOf: function (arr, item) {
-      console.log(arr);
       if (Array.isArray(arr)) {
         var pos = -1;
         if (arr.length > 0) {
