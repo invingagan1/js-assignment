@@ -51,7 +51,6 @@ define([
 
     it('you should be able to return a list of files in a subdir', function () {
       var result = answers.listFiles(fileData, 'js');
-      console.log(result);
       expect(result.length).to.eql(5);
       expect(result.indexOf('main.js') > -1).to.be.ok;
       expect(result.indexOf('underscore.js') > -1).to.be.ok;
