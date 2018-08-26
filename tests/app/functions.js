@@ -116,7 +116,6 @@ define([
 
     it('you should be able to create a "partial" function for variable number of applied arguments', function () {
       var partialMe = function (x, y, z) {
-        console.info(x, y, z);
         return x / y * z;
       };
 
