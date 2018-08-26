@@ -23,6 +23,7 @@ define([
       }
 
       console.log = function (val) {
+        console.info(val)
         nums.push(val);
       };
     });
