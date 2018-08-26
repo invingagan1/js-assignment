@@ -65,21 +65,25 @@ define(function () {
     curryIt: function (fn) {
       var args = [];
 
-      function curry(fn, index, args) {
+      function nest(fn, index, args) {
         return function (x) {
           args.push(x);
-          if (index === args.length) {
+          if (fn.length === args.length) {
+            //no nesting required;
             return fn(...args);
+          } else {
+            return nest(fn, index + 1, args);
           }
-          return curry(fn, index + 1, args);
         };
       }
 
-      if (arguments.length === 1) {
+
+      if (fn.length === 1) {
         return fn;
       } else {
-        return curry(fn, 1, args);
+        return nest(fn, 1, args);
       }
+
     }
   };
 });
